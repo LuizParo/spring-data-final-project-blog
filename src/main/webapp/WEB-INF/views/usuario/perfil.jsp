@@ -48,8 +48,8 @@
 					<td>${usuario.perfil}</td>
 				</tr>
 				<tr>
-					<a href="#" title="Editar">&#9445</a>
-					<a href="#" title="Excluir">&#9447</a>
+					<a href="#" title="Editar">Editar</a>
+					<a href="#" title="Excluir">Excluir</a>
 				</tr>
 			</table>
 		</fieldset>

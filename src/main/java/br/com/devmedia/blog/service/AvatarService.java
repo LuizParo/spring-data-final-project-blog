@@ -25,7 +25,7 @@ public class AvatarService {
     
     public Avatar getAvatarByUpload(MultipartFile file) {
         Avatar avatar = new Avatar();
-        if(file != null && file.isEmpty()) {
+        if(file != null && !file.isEmpty()) {
             try {
                 avatar.setTitulo(file.getOriginalFilename());
                 avatar.setTipo(file.getContentType());

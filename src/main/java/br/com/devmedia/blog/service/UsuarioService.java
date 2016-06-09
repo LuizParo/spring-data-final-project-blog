@@ -41,13 +41,13 @@ public class UsuarioService {
         this.repository.delete(id);
     }
     
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public void save(Usuario usuario) {
         if(usuario.getDataCadastro() == null) {
             usuario.setDataCadastro(LocalDate.now());
         }
         
-        new BCryptPasswordEncoder().encode(usuario.getSenha());
+        usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
         repository.save(usuario);
     }
 }

@@ -35,7 +35,7 @@
 		<form:form modelAttribute="usuario" action="${save}" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<legend>Cadastro de Usuários</legend>
-				<form:hidden type="text" path="id"/>
+				<form:hidden path="id"/>
 				<div>
 					<form:label path="nome">Nome do Usuário</form:label><br/>
 					<form:input type="text" path="nome" title="Inserir Nome" required="true" />
