@@ -21,11 +21,12 @@
 				<c:forEach items="${usuarios}" var="usuario" varStatus="i">
 					<tr bgcolor="${i.count % 2 != 0 ? '#f1f1f1' : white}">
 						<td>${usuario.nome}</td>
-						<td>${nusuario.email}</td>
+						<td>${usuario.email}</td>
 						<td>${usuario.dataCadastro}</td>
 						<td>${usuario.perfil}</td>
 						<td>
-							<a href="#" title="Editar">&#9445</a>
+							<c:url value="/usuario/update/${usuario.id}" var="update" />
+							<a href="${update}" title="Editar">&#9445</a>
 							<a href="#" title="Excluir">&#9447</a>
 						</td>
 					</tr>

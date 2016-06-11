@@ -50,4 +50,9 @@ public class UsuarioService {
         usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
         repository.save(usuario);
     }
+
+    @Transactional(readOnly = false)
+    public void updateNomeAndEmail(Usuario usuario) {
+        this.repository.updateNomeAndEmail(usuario.getNome(), usuario.getEmail(), usuario.getId());
+    }
 }
