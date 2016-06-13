@@ -55,4 +55,10 @@ public class UsuarioService {
     public void updateNomeAndEmail(Usuario usuario) {
         this.repository.updateNomeAndEmail(usuario.getNome(), usuario.getEmail(), usuario.getId());
     }
+
+    @Transactional(readOnly = false)
+    public void updateSenha(Usuario usuario) {
+        usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+        this.repository.updateSenha(usuario.getSenha(), usuario.getId());
+    }
 }

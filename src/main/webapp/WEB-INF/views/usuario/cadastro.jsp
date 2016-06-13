@@ -8,6 +8,8 @@
 		<link type="text/css" rel="stylesheet" href="<c:url value="/css/style.css" />" />
 	</head>
 	<body>
+		<c:import url="../menu.jsp" />
+		<br/>
 		<c:url var="save" value="/usuario" />
 		<form:form modelAttribute="usuario" action="${save}" method="post" enctype="multipart/form-data">
 			<fieldset>

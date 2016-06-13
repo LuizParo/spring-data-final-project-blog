@@ -46,11 +46,27 @@ public class UsuarioController implements Serializable {
         if(id.isPresent()) {
             usuario = this.usuarioService.findById(id.get());
             view.addObject("usuario", usuario);
-            view.setViewName("usuario/usuario");
+            view.setViewName("usuario/atualizar");
             return view;
         }
         
         this.usuarioService.updateNomeAndEmail(usuario);
+        view.setViewName("redirect:/usuario/perfil/" + usuario.getId());
+        return view;
+    }
+    
+    @RequestMapping(value = {"/update/senha/{id}", "/update/senha"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView updateSenha(@PathVariable("id") Optional<Long> id, @ModelAttribute("usuario") Usuario usuario) {
+        ModelAndView view = new ModelAndView();
+        
+        if(id.isPresent()) {
+            usuario = this.usuarioService.findById(id.get());
+            view.addObject("usuario", usuario);
+            view.setViewName("usuario/atualizar");
+            return view;
+        }
+        
+        this.usuarioService.updateSenha(usuario);
         view.setViewName("redirect:/usuario/perfil/" + usuario.getId());
         return view;
     }

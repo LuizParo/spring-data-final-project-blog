@@ -8,10 +8,13 @@
 		<link type="text/css" rel="stylesheet" href="<c:url value="/css/style.css" />" />
 	</head>
 	<body>
+		<c:import url="../menu.jsp" />
+		<br/>
 		<fieldset>
 			<legend>Lista de Usuários</legend>
 			<table class="table">
 				<tr>
+					<th>Avatar</th>
 					<th>Nome do Usuário</th>
 					<th>E-mail</th>
 					<th>Data de Cadastro</th>
@@ -20,6 +23,9 @@
 				</tr>
 				<c:forEach items="${usuarios}" var="usuario" varStatus="i">
 					<tr bgcolor="${i.count % 2 != 0 ? '#f1f1f1' : white}">
+						<td>
+							<img alt="avatar" src='<c:url value="/avatar/load/${usuario.avatar.id}" />' style="width: 25px; height: 25px;" />
+						</td>
 						<td>${usuario.nome}</td>
 						<td>${usuario.email}</td>
 						<td>${usuario.dataCadastro}</td>

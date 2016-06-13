@@ -8,10 +8,13 @@
 		<link type="text/css" rel="stylesheet" href="<c:url value="/css/style.css" />" />
 	</head>
 	<body>
+		<c:import url="../menu.jsp" />
+		<br/>
 		<fieldset>
 			<legend>Perfil</legend>
 			<table class="table">
 				<tr>
+					<th>Avatar</th>
 					<th>Nome do Usuário</th>
 					<th>E-mail</th>
 					<th>Data de Cadastro</th>
@@ -19,6 +22,9 @@
 					<th>Ação</th>
 				</tr>
 				<tr>
+					<td>
+						<img alt="avatar" src='<c:url value="/avatar/load/${usuario.avatar.id}" />' style="width: 25px; height: 25px;" />
+					</td>
 					<td>${usuario.nome}</td>
 					<td>${usuario.email}</td>
 					<td>${usuario.dataCadastro}</td>
