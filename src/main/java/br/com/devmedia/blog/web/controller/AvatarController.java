@@ -3,6 +3,7 @@ package br.com.devmedia.blog.web.controller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -27,7 +28,9 @@ import br.com.devmedia.blog.service.UsuarioService;
 
 @Controller
 @RequestMapping("avatar")
-public class AvatarController {
+public class AvatarController implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private static final Logger LOG = Logger.getLogger(AvatarController.class);
     
     @Autowired
