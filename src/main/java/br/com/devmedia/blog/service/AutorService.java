@@ -29,7 +29,12 @@ public class AutorService {
         return this.repository.findAll();
     }
     
+    @Transactional(readOnly = false)
     public void save(Autor autor) {
-        this.repository.save(autor);
+        if (autor.getId() == null) {
+            this.repository.save(autor);
+        } else {
+            this.repository.updatenomeAndBiografia(autor.getNome(), autor.getBiografia(), autor.getId());
+        }
     }
 }

@@ -26,18 +26,28 @@ public class AutorController implements Serializable {
         return new ModelAndView("autor/cadastro");
     }
     
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String save(@ModelAttribute("autor") Autor autor) {
         this.autorService.save(autor);
         return "redirect:/autor/perfil/" + autor.getId();
     }
     
+    @RequestMapping(value = "/perfil/{id}", method = RequestMethod.GET)
     public ModelAndView getAutor(@PathVariable("id") Long id) {
         ModelAndView view = new ModelAndView("autor/perfil");
         
         Autor autor = this.autorService.findById(id);
         view.addObject("autor", autor);
         
+        return view;
+    }
+    
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public ModelAndView preUpdate(@PathVariable("id") Long id) {
+        Autor autor = this.autorService.findById(id);
+        
+        ModelAndView view = new ModelAndView("autor/cadastro");
+        view.addObject("autor", autor);
         return view;
     }
 }
