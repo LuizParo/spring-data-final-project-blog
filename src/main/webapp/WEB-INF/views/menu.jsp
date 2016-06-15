@@ -8,6 +8,6 @@
 	</nav>
 	<nav>
 		<a href="<c:url value="/autor/form" />">Add Autor</a>
-		<a href="<c:url value="" />">Lista de Autores</a>
+		<a href="<c:url value="/autor/list" />">Lista de Autores</a>
 	</nav>
 </fieldset>

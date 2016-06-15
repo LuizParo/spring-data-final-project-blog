@@ -1,5 +1,6 @@
 package br.com.devmedia.blog.service;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,8 +16,9 @@ import br.com.devmedia.blog.repository.UsuarioRepository;
 
 @Service
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-public class UsuarioService {
-
+public class UsuarioService implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     @Autowired
     private UsuarioRepository repository;
     

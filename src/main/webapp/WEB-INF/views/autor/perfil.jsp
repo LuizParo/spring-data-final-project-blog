@@ -20,17 +20,20 @@
 					<th>Biografia</th>
 					<th>Ação</th>
 				</tr>
-				<tr>
-					<td>${autor.nome}</td>
-					<td>${autor.usuario.email}</td>
-					<td>${autor.usuario.dataCadastro}</td>
-					<td>${autor.biografia}</td>
-					<td>
-						<c:url value="/autor/update/${autor.id}" var="update" />
-						<a href="${update}" title="Editar">&#9445</a>
-						<a href="#" title="Excluir">&#9447</a>
-					</td>
-				</tr>
+				<c:forEach items="${autores}" var="autor" varStatus="i" >
+					<tr bgcolor="${i.count % 2 != 0 ? '#f1f1f1' : 'white'}">
+						<td>${autor.nome}</td>
+						<td>${autor.usuario.email}</td>
+						<td>${autor.usuario.dataCadastro}</td>
+						<td>${autor.biografia}</td>
+						<td>
+							<c:url value="/autor/update/${autor.id}" var="update" />
+							<a href="${update}" title="Editar">&#9445</a>
+							<c:url value="/autor/delete/${autor.id}" var="delete" />
+							<a href="${delete}" title="Excluir">&#9447</a>
+						</td>
+					</tr>
+				</c:forEach>
 			</table>
 		</fieldset>
 	</body>

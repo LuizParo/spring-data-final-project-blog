@@ -1,6 +1,7 @@
 package br.com.devmedia.blog.service;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import br.com.devmedia.blog.repository.AvatarRepository;
 
 @Service
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-public class AvatarService {
-    
+public class AvatarService implements Serializable {
+    private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(AvatarService.class);
     
     @Autowired

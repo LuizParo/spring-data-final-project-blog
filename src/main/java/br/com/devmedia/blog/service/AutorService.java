@@ -1,5 +1,6 @@
 package br.com.devmedia.blog.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,9 @@ import br.com.devmedia.blog.repository.AutorRepository;
 
 @Service
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-public class AutorService {
-
+public class AutorService implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     @Autowired
     private AutorRepository repository;
     
@@ -36,5 +38,10 @@ public class AutorService {
         } else {
             this.repository.updatenomeAndBiografia(autor.getNome(), autor.getBiografia(), autor.getId());
         }
+    }
+
+    @Transactional(readOnly = false)
+    public void delete(Long id) {
+        this.repository.delete(id);
     }
 }
