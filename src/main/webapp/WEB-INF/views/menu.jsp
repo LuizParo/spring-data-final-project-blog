@@ -10,4 +10,8 @@
 		<a href="<c:url value="/autor/form" />">Add Autor</a>
 		<a href="<c:url value="/autor/list" />">Lista de Autores</a>
 	</nav>
+	<nav>
+		<a href="<c:url value="/postagem/form" />">Add Postagem</a>
+		<a href="<c:url value="/postagem/list" />">Lista de Postagens</a>
+	</nav>
 </fieldset>

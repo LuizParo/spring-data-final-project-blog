@@ -84,6 +84,10 @@ public class Postagem implements Serializable {
     public void setAutor(Autor autor) {
         this.autor = autor;
     }
+    
+    public boolean isNew() {
+        return null == this.getId();
+    }
 
     @Override
     public int hashCode() {
