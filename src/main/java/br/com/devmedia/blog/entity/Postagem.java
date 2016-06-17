@@ -2,13 +2,18 @@ package br.com.devmedia.blog.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -36,6 +41,14 @@ public class Postagem implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_autor")
     private Autor autor;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "postagem_categoria",
+            joinColumns = @JoinColumn(name = "id_postagem"),
+            inverseJoinColumns = @JoinColumn(name = "id_categoria")
+    )
+    private List<Categoria> categorias = new ArrayList<>();
     
     public Long getId() {
         return id;
@@ -83,6 +96,14 @@ public class Postagem implements Serializable {
 
     public void setAutor(Autor autor) {
         this.autor = autor;
+    }
+    
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+    
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
     
     public boolean isNew() {
