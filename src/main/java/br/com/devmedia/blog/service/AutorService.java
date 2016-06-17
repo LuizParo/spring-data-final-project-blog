@@ -36,7 +36,7 @@ public class AutorService implements Serializable {
         if (autor.getId() == null) {
             this.repository.save(autor);
         } else {
-            this.repository.updatenomeAndBiografia(autor.getNome(), autor.getBiografia(), autor.getId());
+            this.repository.updateNomeAndBiografia(autor.getNome(), autor.getBiografia(), autor.getId());
         }
     }
 
