@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,5 +34,19 @@ public class PostagemController {
     public ModelAndView list(ModelMap model) {
         model.addAttribute("postagens", this.postagemService.findAll());
         return new ModelAndView("postagem/list", model);
+    }
+    
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Long id) {
+        this.postagemService.delete(id);
+        return "redirect:/postagem/list";
+    }
+    
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public ModelAndView preUpdate(@PathVariable("id") Long id, ModelMap model) {
+        Postagem postagem = this.postagemService.findById(id);
+        model.addAttribute("postagem", postagem);
+        
+        return new ModelAndView("postagem/cadastro", model);
     }
 }

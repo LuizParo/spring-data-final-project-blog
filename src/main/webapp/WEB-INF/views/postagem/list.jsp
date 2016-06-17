@@ -31,7 +31,8 @@
 						<td>
 							<c:url value="/postagem/update/${postagem.id}" var="update" />
 							<a href="${update}" title="Editar">&#9445</a>
-							<a href="#" title="Excluir">&#9447</a>
+							<c:url value="/postagem/delete/${postagem.id}" var="delete" />
+							<a href="${delete}" title="Excluir">&#9447</a>
 						</td>
 					</tr>
 				</c:forEach>

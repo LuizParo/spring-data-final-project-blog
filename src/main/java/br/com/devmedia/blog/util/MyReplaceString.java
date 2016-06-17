@@ -12,7 +12,7 @@ public class MyReplaceString implements Serializable {
     public String formatPermalink(String value) {
         return Normalizer.normalize(value.toLowerCase().trim(), Normalizer.Form.NFD)
                 .replaceAll("\\s", "_")
-                .replaceAll("\\_+", "_")
-                .replaceAll("\\W", "");
+                .replaceAll("\\W", "")
+                .replaceAll("\\_+", "_");
     }
 }

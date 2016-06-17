@@ -37,6 +37,11 @@ public class PostagemService implements Serializable {
     }
 
     @Transactional(readOnly = false)
+    public void delete(Long id) {
+        this.repository.delete(id);
+    }
+    
+    @Transactional(readOnly = false)
     public void saveOrUpdate(Postagem postagem) {
         if(postagem.isNew()) {
             this.save(postagem);
@@ -52,6 +57,16 @@ public class PostagemService implements Serializable {
     }
     
     private void update(Postagem postagem) {
+        Postagem postagemMerged = this.repository.findOne(postagem.getId());
         
+        if(!postagemMerged.getTitulo().equals(postagem.getTitulo())) {
+            postagemMerged.setTitulo(postagem.getTitulo());
+        }
+        
+        if(!postagemMerged.getTexto().equals(postagem.getTexto())) {
+            postagemMerged.setTexto(postagem.getTexto());
+        }
+        
+        this.repository.save(postagemMerged);
     }
 }
