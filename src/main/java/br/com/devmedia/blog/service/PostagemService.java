@@ -67,6 +67,10 @@ public class PostagemService implements Serializable {
             postagemMerged.setTexto(postagem.getTexto());
         }
         
+        if(postagemMerged.getCategorias() != postagem.getCategorias()) {
+            postagemMerged.setCategorias(postagem.getCategorias());
+        }
+        
         this.repository.save(postagemMerged);
     }
 }
