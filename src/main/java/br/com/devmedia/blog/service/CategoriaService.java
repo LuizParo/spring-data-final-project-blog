@@ -23,7 +23,7 @@ public class CategoriaService {
     
     @Transactional(readOnly = false)
     public void saveOrUpdate(Categoria categoria) {
-        categoria.setDescricao(this.linkFormatter.formatPermalink(categoria.getDescricao()));
+        categoria.setPermalink(this.linkFormatter.formatPermalink(categoria.getDescricao()));
         this.repository.save(categoria);
     }
     
