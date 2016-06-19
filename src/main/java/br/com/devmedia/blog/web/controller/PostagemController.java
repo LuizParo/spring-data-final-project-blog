@@ -1,5 +1,6 @@
 package br.com.devmedia.blog.web.controller;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ import br.com.devmedia.blog.web.editor.CategoriaEditorSupport;
 
 @Controller
 @RequestMapping("postagem")
-public class PostagemController {
+public class PostagemController implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Autowired
     private PostagemService postagemService;

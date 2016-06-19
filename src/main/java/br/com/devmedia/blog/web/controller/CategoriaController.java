@@ -1,5 +1,7 @@
 package br.com.devmedia.blog.web.controller;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,8 +16,9 @@ import br.com.devmedia.blog.service.CategoriaService;
 
 @Controller
 @RequestMapping("categoria")
-public class CategoriaController {
-
+public class CategoriaController implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     @Autowired
     private CategoriaService categoriaService;
     

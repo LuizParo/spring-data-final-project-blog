@@ -73,4 +73,12 @@ public class PostagemService implements Serializable {
         
         this.repository.save(postagemMerged);
     }
+
+    public List<Postagem> findByCategoria(String link) {
+        return this.repository.findByCategoriasPermalink(link);
+    }
+
+    public List<Postagem> findByAutor(String nome) {
+        return this.repository.findByAutorNome(nome);
+    }
 }
