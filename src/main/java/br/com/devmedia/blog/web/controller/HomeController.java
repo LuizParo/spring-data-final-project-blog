@@ -37,4 +37,10 @@ public class HomeController implements Serializable {
         model.addAttribute("postagens", this.postagemService.findByAutor(nome));
         return new ModelAndView("posts", model);
     }
+    
+    @RequestMapping(value = "{permalink}", method = RequestMethod.GET)
+    public ModelAndView openPostagem(@PathVariable("permalink") String permalink, ModelMap model) {
+        model.addAttribute("postagem", this.postagemService.findByPermalink(permalink));
+        return new ModelAndView("post", model);
+    }
 }

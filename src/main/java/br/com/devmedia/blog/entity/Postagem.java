@@ -17,6 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 @Entity
 @Table(name = "postagem")
 public class Postagem implements Serializable {
@@ -35,6 +38,7 @@ public class Postagem implements Serializable {
     @Column(nullable = false, unique = true, length = 60)
     private String permalink;
     
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     @Column(name = "data_postagem", nullable = false)
     private LocalDateTime dataPostagem;
     
