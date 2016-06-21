@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -53,6 +54,9 @@ public class Postagem implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_categoria")
     )
     private List<Categoria> categorias = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "postagem", fetch = FetchType.EAGER)
+    private List<Comentario> comentarios = new ArrayList<>();
     
     public Long getId() {
         return id;
@@ -108,6 +112,14 @@ public class Postagem implements Serializable {
     
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+    
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+    
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
     
     public boolean isNew() {

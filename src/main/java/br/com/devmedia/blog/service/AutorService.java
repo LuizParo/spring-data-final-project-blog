@@ -33,7 +33,7 @@ public class AutorService implements Serializable {
     
     @Transactional(readOnly = false)
     public void save(Autor autor) {
-        if (autor.getId() == null) {
+        if (autor.isNew()) {
             this.repository.save(autor);
         } else {
             this.repository.updateNomeAndBiografia(autor.getNome(), autor.getBiografia(), autor.getId());

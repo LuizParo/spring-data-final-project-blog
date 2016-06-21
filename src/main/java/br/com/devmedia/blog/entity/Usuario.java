@@ -2,6 +2,8 @@ package br.com.devmedia.blog.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -43,6 +46,9 @@ public class Usuario implements Serializable {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "id_avatar")
     private Avatar avatar;
+    
+    @OneToMany(mappedBy = "usuario")
+    private List<Comentario> comentarios = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -98,6 +104,18 @@ public class Usuario implements Serializable {
 
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
+    }
+    
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+    
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+    
+    public boolean isNew() {
+        return null == this.getId();
     }
 
     @Override
