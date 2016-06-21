@@ -65,3 +65,20 @@ fieldset.group .campo {
 	padding: 3px 7px;
 	margin: 0 5px 2px 0;
 }
+
+.post-autor {
+	border: 2px solid #eee;
+	position: relative;
+	padding: 10px 10px 10px 10px;
+	color: silver;
+	font-family: sans-serif;
+	text-align: justify;
+}
+
+.post-avatar {
+	float: left;
+	margin: 0 pxpx 0 0;
+	width: 64px;
+	height: auto;
+	position: relative;
+}
