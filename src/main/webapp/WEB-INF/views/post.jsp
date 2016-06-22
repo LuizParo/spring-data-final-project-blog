@@ -41,6 +41,7 @@
 					<p>${postagem.autor.biografia}</p>
 				</div>
 			</div>
+			<c:import url="comments.jsp" />
 		</fieldset>
 	</body>
 </html>

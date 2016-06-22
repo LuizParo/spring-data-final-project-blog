@@ -5,11 +5,13 @@ import java.io.Serializable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.devmedia.blog.entity.Comentario;
 import br.com.devmedia.blog.service.PostagemService;
 
 @Controller
@@ -39,7 +41,7 @@ public class HomeController implements Serializable {
     }
     
     @RequestMapping(value = "{permalink}", method = RequestMethod.GET)
-    public ModelAndView openPostagem(@PathVariable("permalink") String permalink, ModelMap model) {
+    public ModelAndView openPostagem(@ModelAttribute("comentario") Comentario comentario, @PathVariable("permalink") String permalink, ModelMap model) {
         model.addAttribute("postagem", this.postagemService.findByPermalink(permalink));
         return new ModelAndView("post", model);
     }
