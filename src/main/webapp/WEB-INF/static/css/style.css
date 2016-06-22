@@ -82,3 +82,28 @@ fieldset.group .campo {
 	height: auto;
 	position: relative;
 }
+
+#comentarios {
+	margin-top: 15px;
+}
+
+.comentarios {
+	background: #f1f1f1;
+	margin-bottom: 10px;
+	padding: 10px;
+	font-family: monospace;
+}
+
+.comentarios p {
+	font-family: cursive;
+	font-size: 10pt;
+	text-align: justify;
+}
+
+.comentarios-avatar {
+	float: left;
+	margin: 0 pxpx 0 0;
+	width: 64px;
+	height: auto;
+	position: relative;
+}

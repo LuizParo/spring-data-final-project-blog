@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "comentario")
-public class Comentario implements Serializable {
+public class Comentario implements Serializable, Comparable<Comentario> {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -75,6 +75,11 @@ public class Comentario implements Serializable {
     
     public boolean isNew() {
         return null == this.getId();
+    }
+    
+    @Override
+    public int compareTo(Comentario comentario) {
+        return comentario.getDataComentario().compareTo(this.getDataComentario());
     }
 
     @Override

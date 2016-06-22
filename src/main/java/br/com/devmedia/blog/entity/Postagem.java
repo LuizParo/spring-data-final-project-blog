@@ -3,6 +3,7 @@ package br.com.devmedia.blog.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -115,6 +116,7 @@ public class Postagem implements Serializable {
     }
     
     public List<Comentario> getComentarios() {
+        Collections.sort(comentarios);
         return comentarios;
     }
     
