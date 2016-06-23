@@ -3,6 +3,7 @@ package br.com.devmedia.blog.web.controller;
 import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,9 +25,10 @@ public class CategoriaController implements Serializable {
     
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public ModelAndView cadastro(@ModelAttribute("categoria") Categoria categoria) {
-        ModelAndView view = new ModelAndView("categoria/cadastro");
-        view.addObject("categorias", this.categoriaService.findAll());
+        Page<Categoria> page = this.categoriaService.findByPagination(0, 5);
         
+        ModelAndView view = new ModelAndView("categoria/cadastro");
+        view.addObject("page", page); 
         return view;
     }
     
@@ -45,8 +47,17 @@ public class CategoriaController implements Serializable {
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public ModelAndView preUpdate(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("categoria", this.categoriaService.findById(id));
-        model.addAttribute("categorias", this.categoriaService.findAll());
+        model.addAttribute("page", this.categoriaService.findByPagination(0, 5));
         
         return new ModelAndView("categoria/cadastro", model);
+    }
+    
+    @RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
+    public ModelAndView pageCategorias(@ModelAttribute("categoria") Categoria categoria, @PathVariable("page") Integer pagina) {
+        Page<Categoria> page = this.categoriaService.findByPagination(pagina - 1, 5);
+
+        ModelAndView view = new ModelAndView("categoria/cadastro");
+        view.addObject("page", page);
+        return view;
     }
 }

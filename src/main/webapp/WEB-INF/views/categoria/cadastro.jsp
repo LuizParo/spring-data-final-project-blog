@@ -36,7 +36,7 @@
 					<th>Permalink</th>
 					<th>Ação</th>
 				</tr>
-				<c:forEach items="${categorias}" var="categoria" varStatus="i">
+				<c:forEach items="${page.content}" var="categoria" varStatus="i">
 					<tr bgcolor="${i.count % 2 != 0 ? '#f1f1f1' : white}">
 						<td>${categoria.id}</td>
 						<td>${categoria.descricao}</td>
@@ -50,6 +50,20 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<div align="center">
+				[
+					<c:forEach var="p" begin="1" end="${page.totalPages}">
+						<c:choose>
+							<c:when test="${p - 1 eq page.number}">
+								<label style="font-size: 18pt;">${p}</label>
+							</c:when>
+							<c:otherwise>
+								<a href='<c:url value="/categoria/page/${p}" />' title="Go to ${p}">${p}</a>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				]
+			</div>
 		</fieldset>
 	</body>
 </html>
