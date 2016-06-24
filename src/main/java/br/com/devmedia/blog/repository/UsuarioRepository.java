@@ -1,5 +1,7 @@
 package br.com.devmedia.blog.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +22,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Modifying
     @Query("update Usuario u set u.senha = ?1 where u.id = ?2")
     public void updateSenha(String senha, Long id);
+    
+    public Page<Usuario> findAllByOrderByNomeAsc(Pageable pageable);
 }

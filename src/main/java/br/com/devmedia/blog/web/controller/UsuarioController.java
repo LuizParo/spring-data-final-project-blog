@@ -95,9 +95,14 @@ public class UsuarioController implements Serializable {
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView listUsuarios(ModelMap model) {
-        List<Usuario> usuarios = this.usuarioService.findAll();
-        model.addAttribute("usuarios", usuarios);
-        
+        model.addAttribute("page", this.usuarioService.findByPagination(0, 5));
         return new ModelAndView("usuario/list", model);
+    }
+    
+    @RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
+    public ModelAndView pageUsuarios(@PathVariable("page") Integer pagina) {
+        ModelAndView view = new ModelAndView("usuario/list");
+        view.addObject("page", this.usuarioService.findByPagination(pagina - 1, 5));
+        return view;
     }
 }
