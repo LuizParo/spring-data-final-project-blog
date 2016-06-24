@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,11 @@ public class AutorService implements Serializable {
     
     public List<Autor> findAll() {
         return this.repository.findAll();
+    }
+    
+    public Page<Autor> findByPagination(int page, int size) {
+        Pageable pageable = new PageRequest(page, size);
+        return this.repository.findAllByOrderByNomeAsc(pageable);
     }
     
     @Transactional(readOnly = false)
