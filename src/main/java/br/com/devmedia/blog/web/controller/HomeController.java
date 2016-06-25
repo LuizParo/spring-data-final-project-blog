@@ -24,13 +24,19 @@ public class HomeController implements Serializable {
     
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView home(ModelMap model) {
-        model.addAttribute("postagens", this.postagemService.findAll());
+        model.addAttribute("page", this.postagemService.findByPagination(0, 5));
         return new ModelAndView("posts", model);
     }
     
-    @RequestMapping(value = "categoria/{link}", method = RequestMethod.GET)
-    public ModelAndView postsByCategoria(@PathVariable("link") String link, ModelMap model) {
-        model.addAttribute("postagens", this.postagemService.findByCategoria(link));
+    @RequestMapping(value = "page/{page}", method = RequestMethod.GET)
+    public ModelAndView pageHome(@PathVariable("page") Integer pagina, ModelMap model) {
+        model.addAttribute("page", this.postagemService.findByPagination(pagina - 1, 5));
+        return new ModelAndView("posts", model);
+    }
+    
+    @RequestMapping(value = "categoria/{link}/page/{page}", method = RequestMethod.GET)
+    public ModelAndView postsByCategoria(@PathVariable("page") Integer pagina, @PathVariable("link") String link, ModelMap model) {
+        model.addAttribute("page", this.postagemService.findByPaginationByCategoria(pagina - 1, 5, link));
         return new ModelAndView("posts", model);
     }
     

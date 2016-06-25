@@ -16,7 +16,7 @@
 		<br/>
 		
 		<fieldset>
-			<c:forEach items="${postagens}" var="postagem">
+			<c:forEach items="${page.content}" var="postagem">
 				<div>
 					<div>
 						<h2>
@@ -41,12 +41,26 @@
 						<p class="post-categ">
 							<span>Categorias: </span>
 							<c:forEach items="${postagem.categorias}" var="categoria">
-								<a href='<c:url value="/categoria/${categoria.permalink}"/>' title="${categoria.descricao}">${categoria.descricao}</a>
+								<a href='<c:url value="/categoria/${categoria.permalink}/page/1"/>' title="${categoria.descricao}">${categoria.descricao}</a>
 							</c:forEach>
 						</p>
 					</div>
 				</div>
 			</c:forEach>
+			<div align="center">
+				<c:forEach var="p" begin="1" end="${page.totalPages}">
+					<c:choose>
+						<c:when test="${(p - 1) eq page.number}">
+							<label style="font-size: 18pt;">${p}</label>
+						</c:when>
+						<c:otherwise>
+							<label>
+								<a href='<c:url value="/page/${p}" />' title="Go to ${p}">${p}</a>
+							</label>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</div>
 		</fieldset>
 	</body>
 </html>
