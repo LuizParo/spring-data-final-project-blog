@@ -22,12 +22,15 @@
 					<th>Categorias</th>
 					<th>Ação</th>
 				</tr>
-				<c:forEach items="${postagens}" var="postagem" varStatus="i">
+				<c:forEach items="${page.content}" var="postagem" varStatus="i">
 					<tr bgcolor="${i.count % 2 != 0 ? '#f1f1f1' : white}">
 						<td>${postagem.id}</td>
 						<td>${postagem.titulo}</td>
 						<td>${postagem.permalink}</td>
-						<td>${postagem.dataPostagem}</td>
+						<td>
+							<fmt:parseDate value="${postagem.dataPostagem}" var="date" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+							<fmt:formatDate value="${date}" type="both"/>
+						</td>
 						<td>${postagem.autor.nome}</td>
 						<td>
 							<c:forEach items="${postagem.categorias}" var="categoria">
@@ -43,6 +46,22 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<div align="center">
+				[
+				<c:forEach var="p" begin="1" end="${page.totalPages}">
+					<c:choose>
+						<c:when test="${(p - 1) eq page.number}">
+							<label style="font-size: 18pt;">${p}</label>
+						</c:when>
+						<c:otherwise>
+							<label>
+								<a href='<c:url value="/postagem/page/${p}" />' title="Go to ${p}">${p}</a>
+							</label>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				]
+			</div>
 		</fieldset>
 	</body>
 </html>
