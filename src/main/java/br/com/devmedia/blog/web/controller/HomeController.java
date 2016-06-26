@@ -25,24 +25,28 @@ public class HomeController implements Serializable {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView home(ModelMap model) {
         model.addAttribute("page", this.postagemService.findByPagination(0, 5));
+        model.addAttribute("urlPagination", "/page");
         return new ModelAndView("posts", model);
     }
     
     @RequestMapping(value = "page/{page}", method = RequestMethod.GET)
     public ModelAndView pageHome(@PathVariable("page") Integer pagina, ModelMap model) {
         model.addAttribute("page", this.postagemService.findByPagination(pagina - 1, 5));
+        model.addAttribute("urlPagination", "/page");
         return new ModelAndView("posts", model);
     }
     
     @RequestMapping(value = "categoria/{link}/page/{page}", method = RequestMethod.GET)
     public ModelAndView postsByCategoria(@PathVariable("page") Integer pagina, @PathVariable("link") String link, ModelMap model) {
         model.addAttribute("page", this.postagemService.findByPaginationByCategoria(pagina - 1, 5, link));
+        model.addAttribute("urlPagination", "/categoria/" + link + "/page");
         return new ModelAndView("posts", model);
     }
     
-    @RequestMapping(value = "autor/{nome}", method = RequestMethod.GET)
-    public ModelAndView postsByAutor(@PathVariable("nome") String nome, ModelMap model) {
-        model.addAttribute("postagens", this.postagemService.findByAutor(nome));
+    @RequestMapping(value = "autor/{id}/page/{page}", method = RequestMethod.GET)
+    public ModelAndView postsByAutor(@PathVariable("id") Long autorId, @PathVariable("page") Integer pagina, ModelMap model) {
+        model.addAttribute("page", this.postagemService.findByPaginationByAutor(pagina - 1, 5, autorId));
+        model.addAttribute("urlPagination", "/autor/" + autorId + "/page");
         return new ModelAndView("posts", model);
     }
     

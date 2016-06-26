@@ -24,7 +24,7 @@
 						</h2>
 						<fmt:parseDate value="${postagem.dataPostagem}" var="date" pattern="yyyy-MM-dd'T'HH:mm:ss" />
 						<p>
-							Autor: <a href='<c:url value="/autor/${postagem.autor.nome}" />'>${postagem.autor.nome}</a>
+							Autor: <a href='<c:url value="/autor/${postagem.autor.id}/page/1" />'>${postagem.autor.nome}</a>
 							| Data: <fmt:formatDate value="${date}" pattern="dd/MM/yyyy HH:mm:ss" />
 							| # ${fn:length(postagem.comentarios)} Comentário(s)
 						</p>
@@ -55,7 +55,7 @@
 						</c:when>
 						<c:otherwise>
 							<label>
-								<a href='<c:url value="/page/${p}" />' title="Go to ${p}">${p}</a>
+								<a href='<c:url value="${urlPagination}/${p}" />' title="Go to ${p}">${p}</a>
 							</label>
 						</c:otherwise>
 					</c:choose>

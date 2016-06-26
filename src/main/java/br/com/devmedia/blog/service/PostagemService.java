@@ -94,4 +94,9 @@ public class PostagemService implements Serializable {
         Pageable pageable = new PageRequest(page, size);
         return this.repository.findAllByCategoriasPermalinkOrderByDataPostagemDesc(pageable, permalink);
     }
+
+    public Page<Postagem> findByPaginationByAutor(int page, int size, Long id) {
+        Pageable pageable = new PageRequest(page, size);
+        return this.repository.findAllByAutorIdOrderByDataPostagemDesc(pageable, id);
+    }
 }

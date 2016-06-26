@@ -18,4 +18,6 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
     public Page<Postagem> findAllByOrderByDataPostagemDesc(Pageable pageable);
 
     public Page<Postagem> findAllByCategoriasPermalinkOrderByDataPostagemDesc(Pageable pageable, String permalink);
+
+    public Page<Postagem> findAllByAutorIdOrderByDataPostagemDesc(Pageable pageable, Long id);
 }
