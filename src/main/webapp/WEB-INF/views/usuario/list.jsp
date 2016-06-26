@@ -15,10 +15,22 @@
 			<table class="table">
 				<tr>
 					<th>Avatar</th>
-					<th>Nome do Usuário</th>
+					<th>
+						<a href="<c:url value="/usuario/sort/asc/nome/page/1" />" >&darr;</a>
+						Nome do Usuário
+						<a href="<c:url value="/usuario/sort/desc/nome/page/1" />" >&uarr;</a>
+					</th>
 					<th>E-mail</th>
-					<th>Data de Cadastro</th>
-					<th>Perfil</th>
+					<th>
+						<a href="<c:url value="/usuario/sort/asc/dataCadastro/page/1" />" >&darr;</a>
+						Data de Cadastro
+						<a href="<c:url value="/usuario/sort/desc/dataCadastro/page/1" />" >&uarr;</a>
+					</th>
+					<th>
+						<a href="<c:url value="/usuario/sort/asc/perfil/page/1" />" >&darr;</a>
+						Perfil
+						<a href="<c:url value="/usuario/sort/desc/perfil/page/1" />" >&uarr;</a>
+					</th>
 					<th>Ação</th>
 				</tr>
 				<c:forEach items="${page.content}" var="usuario" varStatus="i">
@@ -48,7 +60,7 @@
 						</c:when>
 						<c:otherwise>
 							<label>
-								<a href='<c:url value="/usuario/page/${p}" />'>${p}</a>
+								<a href='<c:url value="${urlPagination}/${p}" />'>${p}</a>
 							</label>
 						</c:otherwise>
 					</c:choose>

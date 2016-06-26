@@ -95,6 +95,8 @@ public class UsuarioController implements Serializable {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView listUsuarios(ModelMap model) {
         model.addAttribute("page", this.usuarioService.findByPagination(0, 5));
+        model.addAttribute("urlPagination", "/usuario/page/");
+        
         return new ModelAndView("usuario/list", model);
     }
     
@@ -102,6 +104,17 @@ public class UsuarioController implements Serializable {
     public ModelAndView pageUsuarios(@PathVariable("page") Integer pagina) {
         ModelAndView view = new ModelAndView("usuario/list");
         view.addObject("page", this.usuarioService.findByPagination(pagina - 1, 5));
+        view.addObject("urlPagination", "/usuario/page/");
+        
+        return view;
+    }
+    
+    @RequestMapping(value = "/sort/{order}/{field}/page/{page}", method = RequestMethod.GET)
+    public ModelAndView pageUsuario(@PathVariable("page") Integer pagina, @PathVariable("order") String order, @PathVariable("field") String field) {
+        ModelAndView view = new ModelAndView("usuario/list");
+        view.addObject("page", this.usuarioService.findByPaginationOrderByField(pagina - 1, 5, field, order));
+        view.addObject("urlPagination", "/usuario/sort/" + order + "/" + field + "/page");
+        
         return view;
     }
 }
