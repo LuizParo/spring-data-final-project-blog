@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.devmedia.blog.entity.Comentario;
@@ -54,5 +55,19 @@ public class HomeController implements Serializable {
     public ModelAndView openPostagem(@ModelAttribute("comentario") Comentario comentario, @PathVariable("permalink") String permalink, ModelMap model) {
         model.addAttribute("postagem", this.postagemService.findByPermalink(permalink));
         return new ModelAndView("post", model);
+    }
+    
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public ModelAndView search(@RequestParam("texto") String texto, ModelMap model) {
+        model.addAttribute("page", this.postagemService.findByTexto(0, 5, texto));
+        model.addAttribute("urlPagination", "/search/texto/" + texto + "/page");
+        return new ModelAndView("posts", model);
+    }
+    
+    @RequestMapping(value = "search/texto/{texto}/page/{page}", method = RequestMethod.GET)
+    public ModelAndView search(@PathVariable("texto") String texto, @PathVariable("page") Integer pagina, ModelMap model) {
+        model.addAttribute("page", this.postagemService.findByTexto(pagina - 1, 5, texto));
+        model.addAttribute("urlPagination", "/search/texto/" + texto + "/page");
+        return new ModelAndView("posts", model);
     }
 }

@@ -16,6 +16,12 @@
 		<br/>
 		
 		<fieldset>
+			<div>
+				<form action="<c:url value="/search" />" method="get">
+					<input type="search" name="texto" placeholder="busca por palavra chave" />
+					<input type="submit" value="Localizar" />
+				</form>
+			</div>
 			<c:forEach items="${page.content}" var="postagem">
 				<div>
 					<div>
