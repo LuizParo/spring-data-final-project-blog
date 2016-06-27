@@ -37,8 +37,8 @@ public class AutorController implements Serializable {
             view.addObject("autores", Arrays.asList(autor));
             return view;
         }
-        
         view.addObject("page", this.autorService.findByPagination(0, 5));
+        view.addObject("urlPagination", "/autor/page");
         return view;
     }
     
@@ -63,10 +63,11 @@ public class AutorController implements Serializable {
         return "redirect:/autor/form";
     }
     
-    @RequestMapping(value = "/áge/{page}", method = RequestMethod.GET)
+    @RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
     public ModelAndView pageAutores(@PathVariable("page") Integer pagina) {
         ModelAndView view = new ModelAndView("autor/perfil");
         view.addObject("page", this.autorService.findByPagination(pagina - 1, 5));
+        view.addObject("urlPagination", "/autor/page");
         return view;
     }
 }

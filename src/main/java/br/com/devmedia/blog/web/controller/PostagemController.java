@@ -52,13 +52,15 @@ public class PostagemController implements Serializable {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(ModelMap model) {
         model.addAttribute("page", this.postagemService.findByPagination(0, 5));
+        model.addAttribute("urlPagination", "/postagem/page");
         return new ModelAndView("postagem/list", model);
     }
     
     @RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
-    public ModelAndView pagePostegsn(@PathVariable("page") Integer pagina) {
+    public ModelAndView pagePostagens(@PathVariable("page") Integer pagina) {
         ModelAndView view = new ModelAndView("postagem/list");
         view.addObject("page", this.postagemService.findByPagination(pagina - 1, 5));
+        view.addObject("urlPagination", "/postagem/page");
         return view;
     }
     
