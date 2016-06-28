@@ -8,7 +8,8 @@
 				<label style="font-size: 18pt;">${p}</label>
 			</c:when>
 			<c:otherwise>
-				<label> <a href='<c:url value="${urlPagination}/${p}" />'>${p}</a>
+				<label>
+					<a href='<c:url value="${urlPagination}/${p}" />'>${p}</a>
 				</label>
 			</c:otherwise>
 		</c:choose>
