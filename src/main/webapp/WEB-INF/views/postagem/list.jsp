@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Lista de Usuários</title>
 		<link type="text/css" rel="stylesheet" href="<c:url value="/css/style.css" />" />
+		<script type="text/javascript" src="<c:url value="/js/jquery-2.1.4.min.js" />"></script>
 	</head>
 	<body>
 		<c:import url="../menu.jsp" />
