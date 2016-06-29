@@ -68,6 +68,13 @@ public class PostagemController implements Serializable {
         return view;
     }
     
+    @RequestMapping(value = "/ajax/titulo/{titulo}", method = RequestMethod.GET)
+    public ModelAndView searchByAjax(@PathVariable("titulo") String titulo) {
+        ModelAndView view = new ModelAndView("postagem/table-rows");
+        view.addObject("page", this.postagemService.findByTitulo(0, 5, titulo));
+        return view;
+    }
+    
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable("id") Long id) {
         this.postagemService.delete(id);

@@ -21,5 +21,7 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 
     public Page<Postagem> findAllByAutorIdOrderByDataPostagemDesc(Pageable pageable, Long id);
 
-    public Page<Postagem> findByTextoContainingIgnoreCaseOrderByDataPostagemDesc(String texto, Pageable pageRequest);
+    public Page<Postagem> findByTextoContainingIgnoreCaseOrderByDataPostagemDesc(String texto, Pageable pageable);
+
+    public Page<Postagem> findAllByTituloContainingIgnoreCaseOrderByDataPostagemDesc(Pageable pageable, String titulo);
 }
