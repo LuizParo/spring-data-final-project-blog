@@ -52,15 +52,19 @@ public class PostagemController implements Serializable {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(ModelMap model) {
         model.addAttribute("page", this.postagemService.findByPagination(0, 5));
-        model.addAttribute("urlPagination", "/postagem/page");
+        
+        // No necessary with ajax.
+        //model.addAttribute("urlPagination", "/postagem/page");
         return new ModelAndView("postagem/list", model);
     }
     
-    @RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
+    @RequestMapping(value = "/ajax/page/{page}", method = RequestMethod.GET)
     public ModelAndView pagePostagens(@PathVariable("page") Integer pagina) {
-        ModelAndView view = new ModelAndView("postagem/list");
+        ModelAndView view = new ModelAndView("postagem/table-rows");
         view.addObject("page", this.postagemService.findByPagination(pagina - 1, 5));
-        view.addObject("urlPagination", "/postagem/page");
+        
+        // No necessary with ajax.
+        //view.addObject("urlPagination", "/postagem/page");
         return view;
     }
     

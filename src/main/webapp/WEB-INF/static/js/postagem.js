@@ -14,5 +14,17 @@ function tbody(page) {
 			var msg = "Sorry but there was an error: ";
 			$("#info").html(msg + xhr.status + " " + xhr.statusText);
 		}
+		
+		if(status == "success") {
+			$('button').each(function() {
+				var id = '#' + $(this).attr('id');
+				
+				if($(id).attr('disabled') == 'disabled') {
+					$(id).removeAttr('disabled');
+				}
+			});
+			
+			$('#button_' + page).attr('disabled', 'disabled');
+		}
 	});
 }
