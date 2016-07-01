@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.devmedia.blog.entity.Postagem;
@@ -43,10 +44,24 @@ public class PostagemController implements Serializable {
         return view;
     }
     
+    @RequestMapping(value = "/form/ajax", method = RequestMethod.GET)
+    public ModelAndView formAjax() {
+        ModelAndView view = new ModelAndView("postagem/cadastro-ajax");
+        view.addObject("categorias", this.categoriaService.findAll());
+        
+        return view;
+    }
+    
     @RequestMapping(method = RequestMethod.POST)
     public String save(@ModelAttribute("postagem") Postagem postagem) {
         this.postagemService.saveOrUpdate(postagem);
         return "redirect:/postagem/list";
+    }
+    
+    @RequestMapping(value = "/ajax", method = RequestMethod.POST)
+    public @ResponseBody Postagem saveAjax(Postagem postagem) {
+        this.postagemService.saveOrUpdate(postagem);
+        return postagem;
     }
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)

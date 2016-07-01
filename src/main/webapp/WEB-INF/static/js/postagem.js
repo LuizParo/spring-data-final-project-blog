@@ -25,6 +25,10 @@ $(document).ready(function() {
 					"<p>Postagem salva com sucesso!</p>" +
 					"<p>Abrir postagem: <a href='/blog/'" + postagem.permalink + "'>" + postagem.titulo + "</a></p>"
 				);
+				
+				$('#save-ajax').each(function() {
+					this.reset();
+				});
 			})
 			.fail(function(error) {
 				$('#info').empty().append(

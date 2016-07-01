@@ -40,7 +40,7 @@ public class Postagem implements Serializable {
     @Column(nullable = false, unique = true, length = 60)
     private String permalink;
     
-    @DateTimeFormat(iso = ISO.DATE_TIME)
+    @DateTimeFormat(iso = ISO.DATE_TIME, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(name = "data_postagem", nullable = false)
     private LocalDateTime dataPostagem;
     
@@ -48,6 +48,7 @@ public class Postagem implements Serializable {
     @JoinColumn(name = "id_autor")
     private Autor autor;
     
+    //@JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "postagem_categoria",
