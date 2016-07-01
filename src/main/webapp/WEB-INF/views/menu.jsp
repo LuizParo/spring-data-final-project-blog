@@ -16,6 +16,7 @@
 	<nav>
 		<a href="<c:url value="/postagem/form" />">Add Postagem</a>
 		<a href="<c:url value="/postagem/list" />">Lista de Postagens</a>
+		<a href="<c:url value="/postagem/form/ajax" />">Add Postagem Ajax</a>
 	</nav>
 	<nav>
 		<a href="<c:url value="/categoria/form" />">Categorias</a>

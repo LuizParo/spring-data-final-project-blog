@@ -15,6 +15,23 @@ $(document).ready(function() {
 			tbody(1);
 		}
 	});
+	
+	$("#save-ajax").submit(function(event) {
+		event.preventDefault();
+		
+		$.post('/blog/postagem/ajax', $(this).serialize())
+			.done(function(postagem) {
+				$('#info').empty().append(
+					"<p>Postagem salva com sucesso!</p>" +
+					"<p>Abrir postagem: <a href='/blog/'" + postagem.permalink + "'>" + postagem.titulo + "</a></p>"
+				);
+			})
+			.fail(function(error) {
+				$('#info').empty().append(
+					"<p>Error: status " + error.status + ", " + error.statusText + "</p>"
+				);
+			});
+	});
 });
 
 function tbody(page) {
