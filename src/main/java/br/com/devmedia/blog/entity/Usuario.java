@@ -17,6 +17,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "usuario")
@@ -49,6 +52,9 @@ public class Usuario implements Serializable {
     
     @OneToMany(mappedBy = "usuario")
     private List<Comentario> comentarios = new ArrayList<>();
+    
+    @Transient
+    private MultipartFile file;
 
     public Long getId() {
         return id;
@@ -114,6 +120,14 @@ public class Usuario implements Serializable {
         this.comentarios = comentarios;
     }
     
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     public boolean isNew() {
         return null == this.getId();
     }

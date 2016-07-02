@@ -17,19 +17,23 @@
 				<form:hidden path="id"/>
 				<div class="campo">
 					<form:label path="nome">Nome do Usuário</form:label><br/>
-					<form:input type="text" path="nome" title="Inserir Nome" required="true" />
+					<form:input type="text" path="nome" title="Inserir Nome" />
+					<form:errors path="nome" cssClass="error" />
 				</div>
 				<div class="campo">
 					<form:label path="email">E-mail do Usuário</form:label><br/>
-					<form:input type="email" path="email" title="Inserir Email" required="true" />
+					<form:input type="email" path="email" title="Inserir Email" />
+					<form:errors path="email" cssClass="error" />
 				</div>
 				<div class="campo">
 					<form:label path="senha">Senha</form:label><br/>
-					<form:password path="senha" required="true"/>
+					<form:password path="senha" />
+					<form:errors path="senha" cssClass="error" />
 				</div>
 				<div class="campo">
-					<label for="file">Avatar</label><br/>
-					<input type="file" name="file" required="true" />
+					<form:label path="file">Avatar</form:label><br/>
+					<form:input type="file" path="file" />
+					<form:errors path="file" cssClass="error" />
 				</div>
 				<div class="campo">
 					<form:label path="perfil">Perfil</form:label><br/>
