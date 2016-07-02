@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "comentario")
 public class Comentario implements Serializable, Comparable<Comentario> {
@@ -21,6 +24,8 @@ public class Comentario implements Serializable, Comparable<Comentario> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @NotBlank(message = "Preencha o comentário!")
+    @Length(min = 5, max = 255, message = "Seu comentário deve conter entre {min} e {max} caracteres!")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String texto;
     

@@ -5,6 +5,8 @@ import java.io.Serializable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +33,18 @@ public class CategoriaController implements Serializable {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public String save(@ModelAttribute("categoria") Categoria categoria) {
+    public ModelAndView save(@ModelAttribute("categoria") @Validated Categoria categoria, BindingResult result) {
+        ModelAndView view = new ModelAndView("redirect:/categoria/form");
+        
+        if(result.hasErrors()) {
+            view.setViewName("categoria/cadastro");
+            view.addObject("page", this.categoriaService.findByPagination(0, 5));
+            view.addObject("urlPagination", "/categoria/page");
+            return view;
+        }
+        
         this.categoriaService.saveOrUpdate(categoria);
-        return "redirect:/categoria/form";
+        return view;
     }
     
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

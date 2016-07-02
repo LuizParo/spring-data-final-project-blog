@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "categoria")
 public class Categoria implements Serializable {
@@ -23,6 +26,8 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @NotBlank(message = "Descrição não pode ser vazia!")
+    @Length(min = 3, max = 30)
     @Column(nullable = false, unique = true, length = 30)
     private String descricao;
     

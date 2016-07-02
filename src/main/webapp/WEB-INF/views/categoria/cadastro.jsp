@@ -18,7 +18,8 @@
 				<form:hidden path="id"/>
 				<div class="campo">
 					<form:label path="descricao">Descrição da Categoria</form:label><br/>
-					<form:input type="text" path="descricao" title="Descrição da Categoria" required="true" size="60" />
+					<form:input type="text" path="descricao" title="Descrição da Categoria" size="60" />
+					<form:errors path="descricao" cssClass="error" />
 				</div>
 				<div>
 					<input type="submit" value="Salvar" />
