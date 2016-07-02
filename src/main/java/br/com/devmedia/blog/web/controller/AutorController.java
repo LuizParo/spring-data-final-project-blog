@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +54,10 @@ public class AutorController implements Serializable {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public String save(@ModelAttribute("autor") Autor autor) {
+    public String save(@ModelAttribute("autor") @Validated Autor autor, BindingResult result) {
+        if(result.hasErrors()) {
+            return "autor/cadastro";
+        }
         this.autorService.save(autor);
         return "redirect:/autor/perfil/" + autor.getId();
     }

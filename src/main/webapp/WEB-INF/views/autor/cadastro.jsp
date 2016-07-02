@@ -17,11 +17,13 @@
 				<form:hidden path="id"/>
 				<div class="campo">
 					<form:label path="nome">Nome do Autor</form:label><br/>
-					<form:input type="text" path="nome" title="Inserir Nome" required="true" />
+					<form:input type="text" path="nome" title="Inserir Nome" />
+					<form:errors path="nome" cssClass="error" />
 				</div>
 				<div class="campo">
 					<form:label path="biografia">Biografia</form:label><br/>
-					<form:textarea cols="50" rows="10" path="biografia" title="Inserir Biografia" required="true" />
+					<form:textarea cols="50" rows="10" path="biografia" title="Inserir Biografia" />
+					<form:errors path="biografia" cssClass="error" />
 				</div>
 				<div>
 					<input type="submit" value="Salvar" />

@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "autores")
 public class Autor implements Serializable {
@@ -23,9 +26,13 @@ public class Autor implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotBlank
+    @Length(min = 3, max = 50)
     @Column(nullable = false, unique = true, length = 50)
     private String nome;
     
+    @NotBlank(message = "Este campo não aceita valor em branco.")
+    @Length(min = 5, max = 255, message = "Este campo aceita entre 5 e 255 caracteres.")
     @Column(nullable = false, length = 255)
     private String biografia;
     

@@ -107,3 +107,7 @@ fieldset.group .campo {
 	height: auto;
 	position: relative;
 }
+
+.error {
+	color: #ff0000;
+}
