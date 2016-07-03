@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "avatar")
@@ -29,6 +32,9 @@ public class Avatar implements Serializable {
     @Lob
     @Column(nullable = false)
     private byte[] avatar;
+
+    @Transient
+    private MultipartFile file;
 
     public Long getId() {
         return id;
@@ -62,6 +68,14 @@ public class Avatar implements Serializable {
         this.avatar = avatar;
     }
 
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -89,7 +103,6 @@ public class Avatar implements Serializable {
 
     @Override
     public String toString() {
-        return "Avatar [id=" + id + ", titulo=" + titulo + ", tipo=" + tipo + ", avatar=" + Arrays.toString(avatar)
-                + "]";
+        return "Avatar [id=" + id + ", titulo=" + titulo + ", tipo=" + tipo + ", avatar=" + Arrays.toString(avatar) + "]";
     }
 }

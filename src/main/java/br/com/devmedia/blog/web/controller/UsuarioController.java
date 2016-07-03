@@ -35,18 +35,23 @@ public class UsuarioController implements Serializable {
     @Autowired
     private AvatarService avatarService;
     
-    @InitBinder
+    @InitBinder(value = "usuario")
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Perfil.class, new PerfilEditorSupport());
         binder.setValidator(new UsuarioValidator());
     }
     
     @RequestMapping(value = {"/update/{id}", "/update"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView update(@PathVariable("id") Optional<Long> id, @ModelAttribute("usuario") Usuario usuario) {
+    public ModelAndView update(@PathVariable("id") Optional<Long> id, @ModelAttribute("usuario") @Validated Usuario usuario, BindingResult result) {
         ModelAndView view = new ModelAndView();
         if(id.isPresent()) {
             usuario = this.usuarioService.findById(id.get());
             view.addObject("usuario", usuario);
+            view.setViewName("usuario/atualizar");
+            return view;
+        }
+        
+        if(result.hasErrors()) {
             view.setViewName("usuario/atualizar");
             return view;
         }
@@ -57,13 +62,21 @@ public class UsuarioController implements Serializable {
     }
     
     @RequestMapping(value = {"/update/senha/{id}", "/update/senha"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView updateSenha(@PathVariable("id") Optional<Long> id, @ModelAttribute("usuario") Usuario usuario) {
+    public ModelAndView updateSenha(@PathVariable("id") Optional<Long> id, @ModelAttribute("usuario") @Validated Usuario usuario, BindingResult result) {
         ModelAndView view = new ModelAndView();
         
         if(id.isPresent()) {
             usuario = this.usuarioService.findById(id.get());
             view.addObject("usuario", usuario);
             view.setViewName("usuario/atualizar");
+            return view;
+        }
+        
+        if(result.hasFieldErrors("senha")) {
+            usuario = this.usuarioService.findById(usuario.getId());
+            view.setViewName("usuario/atualizar");
+            view.addObject("nome", usuario.getNome());
+            view.addObject("email", usuario.getEmail());
             return view;
         }
         
