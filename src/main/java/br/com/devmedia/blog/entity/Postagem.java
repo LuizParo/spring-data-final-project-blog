@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
@@ -31,9 +33,12 @@ public class Postagem implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @NotBlank(message = "Campo 'Título' deve ser preenchido!")
+    @Length(min = 5, max = 60, message = "Título deve conter entre {min} e {max} caracteres!")
     @Column(nullable = false, unique = true, length = 60)
     private String titulo;
     
+    @NotBlank(message = "Campo 'Texto' deve ser preenchido!")
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String texto;
     

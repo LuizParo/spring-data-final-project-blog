@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +21,7 @@ import br.com.devmedia.blog.entity.Postagem;
 import br.com.devmedia.blog.service.CategoriaService;
 import br.com.devmedia.blog.service.PostagemService;
 import br.com.devmedia.blog.web.editor.CategoriaEditorSupport;
+import br.com.devmedia.blog.web.validator.PostagemAjaxValidator;
 
 @Controller
 @RequestMapping("postagem")
@@ -53,15 +56,26 @@ public class PostagemController implements Serializable {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public String save(@ModelAttribute("postagem") Postagem postagem) {
+    public ModelAndView save(@ModelAttribute("postagem") @Validated Postagem postagem, BindingResult result) {
+        if(result.hasErrors()) {
+            return new ModelAndView("postagem/cadastro", "categorias", this.categoriaService.findAll());
+        }
         this.postagemService.saveOrUpdate(postagem);
-        return "redirect:/postagem/list";
+        return new ModelAndView("redirect:/postagem/list");
     }
     
     @RequestMapping(value = "/ajax", method = RequestMethod.POST)
-    public @ResponseBody Postagem saveAjax(Postagem postagem) {
+    public @ResponseBody PostagemAjaxValidator saveAjax(@Validated Postagem postagem, BindingResult result) {
+        PostagemAjaxValidator validator = new PostagemAjaxValidator();
+        if(result.hasErrors()) {
+            validator.setStatus("FAIL");
+            validator.validar(result);
+            return validator;
+        }
+        
         this.postagemService.saveOrUpdate(postagem);
-        return postagem;
+        validator.setPostagem(postagem);
+        return validator;
     }
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)

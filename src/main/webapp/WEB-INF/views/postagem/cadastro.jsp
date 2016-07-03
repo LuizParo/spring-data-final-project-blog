@@ -17,11 +17,13 @@
 				<form:hidden path="id"/>
 				<div class="campo">
 					<form:label path="titulo">Título do Post</form:label><br/>
-					<form:input type="text" path="titulo" title="Título do Post" required="true" />
+					<form:input type="text" path="titulo" title="Título do Post" />
+					<form:errors path="titulo" cssClass="error" />
 				</div>
 				<div class="campo">
 					<form:label path="texto">Texto do Post</form:label><br/>
-					<form:textarea rows="15" cols="80" path="texto" title="Texto do Post" required="true" />
+					<form:textarea rows="15" cols="80" path="texto" title="Texto do Post" />
+					<form:errors path="texto" cssClass="error" />
 				</div>
 				<div class="campo">
 					<form:label path="categorias">Seleciona a(s) Categoria(s)</form:label><br/>
