@@ -32,7 +32,7 @@ public class Autor implements Serializable {
     private String nome;
     
     @NotBlank(message = "Este campo não aceita valor em branco.")
-    @Length(min = 5, max = 255, message = "Este campo aceita entre 5 e 255 caracteres.")
+    @Length(min = 5, max = 255, message = "Este campo aceita entre {min} e {max} caracteres.")
     @Column(nullable = false, length = 255)
     private String biografia;
     
