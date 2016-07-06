@@ -3,6 +3,7 @@ package br.com.devmedia.blog.web.controller;
 import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import br.com.devmedia.blog.entity.Comentario;
+import br.com.devmedia.blog.entity.Postagem;
 import br.com.devmedia.blog.service.PostagemService;
 
 @Controller
@@ -31,8 +34,13 @@ public class HomeController implements Serializable {
     }
     
     @RequestMapping(value = "page/{page}", method = RequestMethod.GET)
-    public ModelAndView pageHome(@PathVariable("page") Integer pagina, ModelMap model) {
-        model.addAttribute("page", this.postagemService.findByPagination(pagina - 1, 5));
+    public ModelAndView pageHome(@PathVariable("page") Integer pagina, ModelMap model) throws NoHandlerFoundException {
+        Page<Postagem> page = this.postagemService.findByPagination(pagina - 1, 5);
+        if(page.getContent().isEmpty()) {
+            throw new NoHandlerFoundException(null, null, null);
+        }
+        
+        model.addAttribute("page", page);
         model.addAttribute("urlPagination", "/page");
         return new ModelAndView("posts", model);
     }
@@ -52,8 +60,13 @@ public class HomeController implements Serializable {
     }
     
     @RequestMapping(value = "{permalink}", method = RequestMethod.GET)
-    public ModelAndView openPostagem(@ModelAttribute("comentario") Comentario comentario, @PathVariable("permalink") String permalink, ModelMap model) {
-        model.addAttribute("postagem", this.postagemService.findByPermalink(permalink));
+    public ModelAndView openPostagem(@ModelAttribute("comentario") Comentario comentario, @PathVariable("permalink") String permalink, ModelMap model) throws NoHandlerFoundException {
+        Postagem postagem = this.postagemService.findByPermalink(permalink);
+        if(postagem == null) {
+            throw new NoHandlerFoundException(null, null, null);
+        }
+        
+        model.addAttribute("postagem", postagem);
         return new ModelAndView("post", model);
     }
     
