@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Error Pagee</title>
+		<title>Error Page</title>
 	</head>
 	<body>
 		<h1>Http Status 500</h1>

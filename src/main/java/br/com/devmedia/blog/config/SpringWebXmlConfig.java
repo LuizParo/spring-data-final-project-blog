@@ -10,6 +10,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class SpringWebXmlConfig implements WebApplicationInitializer {
@@ -37,5 +38,9 @@ public class SpringWebXmlConfig implements WebApplicationInitializer {
         FilterRegistration.Dynamic inviewSession = servletContex.addFilter("String OpenEntityManagerInViewFilter", new OpenEntityManagerInViewFilter());
         inviewSession.setAsyncSupported(true);
         inviewSession.addMappingForUrlPatterns(null, true, "/*");
+        
+        FilterRegistration.Dynamic securityFilter = servletContex.addFilter("springSecurityFilterChain", new DelegatingFilterProxy());
+        securityFilter.setAsyncSupported(true);
+        securityFilter.addMappingForUrlPatterns(null, true, "/*");
     }
 }
