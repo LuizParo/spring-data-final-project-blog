@@ -54,7 +54,7 @@ public class Postagem implements Serializable {
     private Autor autor;
     
     //@JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "postagem_categoria",
             joinColumns = @JoinColumn(name = "id_postagem"),
