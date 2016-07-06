@@ -14,7 +14,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/", "/{permalink}").permitAll() // Home page
+                .antMatchers("/",
+                         "/{permalink}",
+                         "/search/**",
+                         "/autor/{id}/page/{page}",
+                         "/categoria/{link}/page/{page}",
+                         "/page/{page}").permitAll()
+                .antMatchers("/avatar/load/{id}").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
