@@ -1,13 +1,21 @@
 package br.com.devmedia.blog.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import br.com.devmedia.blog.service.UsuarioLogadoDetailService;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+    
+    @Autowired
+    private UsuarioLogadoDetailService service;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -21,6 +29,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                          "/categoria/{link}/page/{page}",
                          "/page/{page}").permitAll()
                 .antMatchers("/avatar/load/{id}").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
@@ -36,5 +45,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID")
             .and()
                 .exceptionHandling().accessDeniedPage("/auth/denied");
+    }
+    
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(this.service).passwordEncoder(new BCryptPasswordEncoder());
     }
 }
