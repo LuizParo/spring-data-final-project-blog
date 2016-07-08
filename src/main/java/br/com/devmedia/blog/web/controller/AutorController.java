@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.devmedia.blog.entity.Autor;
+import br.com.devmedia.blog.entity.Usuario;
+import br.com.devmedia.blog.entity.UsuarioLogado;
 import br.com.devmedia.blog.service.AutorService;
+import br.com.devmedia.blog.service.UsuarioService;
 
 @Controller
 @RequestMapping("autor")
@@ -25,9 +29,16 @@ public class AutorController implements Serializable {
     @Autowired
     private AutorService autorService;
     
+    @Autowired
+    private UsuarioService usuarioService;
+    
     @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public ModelAndView shorForm(@ModelAttribute("autor") Autor autor) {
-        return new ModelAndView("autor/cadastro");
+    public ModelAndView shorForm(@ModelAttribute("autor") Autor autor, @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
+        autor = this.autorService.findByUsuario(usuarioLogado.getId());
+        if(autor == null) {
+            return new ModelAndView("autor/cadastro");
+        }
+        return new ModelAndView("redirect:/autor/perfil/" + autor.getId());
     }
     
     @RequestMapping(value = {"/perfil/{id}", "/list"}, method = RequestMethod.GET)
@@ -54,10 +65,16 @@ public class AutorController implements Serializable {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public String save(@ModelAttribute("autor") @Validated Autor autor, BindingResult result) {
+    public String save(@ModelAttribute("autor") @Validated Autor autor, BindingResult result, @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
         if(result.hasErrors()) {
             return "autor/cadastro";
         }
+        
+        if(usuarioLogado.getId() != null) {
+            Usuario usuario = this.usuarioService.findById(usuarioLogado.getId());
+            autor.setUsuario(usuario);
+        }
+        
         this.autorService.save(autor);
         return "redirect:/autor/perfil/" + autor.getId();
     }

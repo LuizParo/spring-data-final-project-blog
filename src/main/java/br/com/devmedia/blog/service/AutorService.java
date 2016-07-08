@@ -52,4 +52,8 @@ public class AutorService implements Serializable {
     public void delete(Long id) {
         this.repository.delete(id);
     }
+
+    public Autor findByUsuario(Long id) {
+        return this.repository.findByUsuarioId(id);
+    }
 }

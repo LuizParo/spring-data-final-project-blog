@@ -16,4 +16,6 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
     public void updateNomeAndBiografia(String nome, String biografia, Long id);
     
     public Page<Autor> findAllByOrderByNomeAsc(Pageable pageable);
+
+    public Autor findByUsuarioId(Long id);
 }

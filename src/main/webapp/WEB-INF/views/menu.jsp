@@ -7,15 +7,19 @@
 	</nav>
 	<nav>
 		<security:authorize access="hasAnyAuthority('ADMIN', 'AUTOR', 'LEITOR')">
-			<a href="<c:url value="/usuario/perfil/${logado.id}" />">Perfil do Usuário</a>
+			|	<a href="<c:url value="/usuario/perfil/${logado.id}" />">Perfil do Usuário</a>
 		</security:authorize>
 		<security:authorize access="hasAuthority('ADMIN')">
-			<a href="<c:url value="/usuario/list" />">Lista de Usuários</a>
+			|	<a href="<c:url value="/usuario/list" />">Lista de Usuários</a>
 		</security:authorize>
 	</nav>
 	<nav>
-		<a href="<c:url value="/autor/form" />">Add Autor</a>
-		<a href="<c:url value="/autor/list" />">Lista de Autores</a>
+		<security:authorize access="hasAuthority('AUTOR')">
+			|	<a href="<c:url value="/autor/form" />">Dados do Autor</a>
+		</security:authorize>
+		<security:authorize access="hasAuthority('ADMIN')">
+			|	<a href="<c:url value="/autor/list" />">Lista de Autores</a>
+		</security:authorize>
 	</nav>
 	<nav>
 		<a href="<c:url value="/postagem/form" />">Add Postagem</a>
