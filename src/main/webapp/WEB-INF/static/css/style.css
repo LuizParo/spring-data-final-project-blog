@@ -111,3 +111,7 @@ fieldset.group .campo {
 .error {
 	color: #ff0000;
 }
+
+.login {
+	text-align: right;
+}

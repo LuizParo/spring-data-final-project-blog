@@ -6,8 +6,12 @@
 		<a href="<c:url value="/" />">Home</a>
 	</nav>
 	<nav>
-		<a href="<c:url value="/usuario/form" />">Add Usuário</a>
-		<a href="<c:url value="/usuario/list" />">Lista de Usuários</a>
+		<security:authorize access="hasAnyAuthority('ADMIN', 'AUTOR', 'LEITOR')">
+			<a href="<c:url value="/usuario/perfil/${logado.id}" />">Perfil do Usuário</a>
+		</security:authorize>
+		<security:authorize access="hasAuthority('ADMIN')">
+			<a href="<c:url value="/usuario/list" />">Lista de Usuários</a>
+		</security:authorize>
 	</nav>
 	<nav>
 		<a href="<c:url value="/autor/form" />">Add Autor</a>
@@ -19,14 +23,21 @@
 		<a href="<c:url value="/postagem/form/ajax" />">Add Postagem Ajax</a>
 	</nav>
 	<nav>
-		<a href="<c:url value="/categoria/form" />">Categorias</a>
+		<security:authorize access="hasAnyAuthority('ADMIN', 'AUTOR')">
+			<a href="<c:url value="/categoria/form" />">Categorias</a>
+		</security:authorize>
 	</nav>
-	<nav>
-		<a href="<c:url value="/auth/form" />">Entrar</a>
-		<a href="<c:url value="#" />">Cadastrar-se</a>
-		<form action="<c:url value="/logout" />" method="post">
-			<security:csrfInput />
-			<button type="submit">Sair</button>
-		</form>
+	<nav class="login">
+		<c:if test="${logado == null}">
+			<a href="<c:url value="/auth/form" />">Entrar</a>
+			<a href="<c:url value="/usuario/form" />">Cadastrar-se</a>
+		</c:if>
+
+		<security:authorize access="hasAnyAuthority('ADMIN', 'AUTOR', 'LEITOR')">
+			<form action="<c:url value="/logout" />" method="post">
+				<security:csrfInput />
+				<button type="submit">Sair</button>
+			</form>
+		</security:authorize>
 	</nav>
 </fieldset>
