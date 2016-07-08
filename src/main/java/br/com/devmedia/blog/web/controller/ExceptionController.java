@@ -19,7 +19,7 @@ public class ExceptionController implements Serializable {
     @ExceptionHandler(Exception.class)
     public ModelAndView genericException(HttpServletRequest request, Exception exception) {
         ModelAndView view = new ModelAndView("error");
-        view.addObject("mensagem", "Ocorreu um erro durante a operação, tente noavmente!");
+        view.addObject("mensagem", "Ocorreu um erro durante a operação, tente novamente!");
         view.addObject("url", request.getRequestURL());
         view.addObject("exception", exception);
         
