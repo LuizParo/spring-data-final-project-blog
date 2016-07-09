@@ -18,8 +18,9 @@ $(document).ready(function() {
 	
 	$("#save-ajax").submit(function(event) {
 		event.preventDefault();
+		var token = $("input[name='_csrf']").attr("value");
 		
-		$.post('/blog/postagem/ajax', $(this).serialize())
+		$.post('/blog/postagem/ajax?_csrf=' + token, $(this).serialize())
 			.done(function(result) {
 				if(result.status != 'FAIL') {
 					$('#info').empty().append(
@@ -48,10 +49,16 @@ $(document).ready(function() {
 
 function tbody(page) {
 	var url = "/blog/postagem/ajax/page/" + page;
+	var autorId = $("#table-ajax").attr("title");
 	
 	var titulo = $('#search').val();
-	if(titulo.length > 0) {
+	
+	if(autorId > 0 && titulo.length > 0) {
+		url = "/blog/postagem/ajax/autor/" + autorId + "/titulo/" + titulo + "/page/" + page;
+	} else if(titulo.length > 0) {
 		url = "/blog/postagem/ajax/titulo/" + titulo + "/page/" + page;
+	} else if (autorId > 0) {
+		url = "/blog/postagem/ajax/autor/" + autorId + "/page/" + page;
 	}
 
 	$("#table-ajax").load(url, function(response, status, xhr) {
@@ -77,6 +84,11 @@ function tbody(page) {
 
 function search(value) {
 	var url = "/blog/postagem/ajax/titulo/" + value + "/page/1";
+	var autorId = $("#table-ajax").attr("title");
+	
+	if(autorId > 0) {
+		url = "/blog/postagem/ajax/autor/" + autorId + "/titulo/" + value + "/page/1";
+	}
 	
 	$('#table-ajax').load(url, function(response, status, xhr) {
 		if(status == 'error') {

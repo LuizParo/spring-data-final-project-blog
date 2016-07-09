@@ -107,4 +107,8 @@ public class PostagemService implements Serializable {
     public Page<Postagem> findByTitulo(int page, int size, String titulo) {
         return this.repository.findAllByTituloContainingIgnoreCaseOrderByDataPostagemDesc(new PageRequest(page, size), titulo);
     }
+
+    public Object findByTituloAndAutor(int page, int size, String titulo, Long autorId) {
+        return this.repository.findAllByAutorIdAndTituloContainingIgnoreCaseOrderByDataPostagemDesc(new PageRequest(page, size), autorId, titulo);
+    }
 }

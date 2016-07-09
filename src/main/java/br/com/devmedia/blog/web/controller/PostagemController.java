@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.devmedia.blog.entity.Autor;
 import br.com.devmedia.blog.entity.Postagem;
+import br.com.devmedia.blog.entity.UsuarioLogado;
+import br.com.devmedia.blog.service.AutorService;
 import br.com.devmedia.blog.service.CategoriaService;
 import br.com.devmedia.blog.service.PostagemService;
 import br.com.devmedia.blog.web.editor.CategoriaEditorSupport;
@@ -33,6 +37,9 @@ public class PostagemController implements Serializable {
     
     @Autowired
     private CategoriaService categoriaService;
+    
+    @Autowired
+    private AutorService autorService;
     
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -56,16 +63,22 @@ public class PostagemController implements Serializable {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(@ModelAttribute("postagem") @Validated Postagem postagem, BindingResult result) {
+    public ModelAndView save(@ModelAttribute("postagem") @Validated Postagem postagem,
+                             BindingResult result,
+                             @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
         if(result.hasErrors()) {
             return new ModelAndView("postagem/cadastro", "categorias", this.categoriaService.findAll());
         }
+        
+        postagem.setAutor(this.autorService.findByUsuario(usuarioLogado.getId()));
         this.postagemService.saveOrUpdate(postagem);
-        return new ModelAndView("redirect:/postagem/list");
+        return new ModelAndView("redirect:/postagem/list/" + usuarioLogado.getId());
     }
     
     @RequestMapping(value = "/ajax", method = RequestMethod.POST)
-    public @ResponseBody PostagemAjaxValidator saveAjax(@Validated Postagem postagem, BindingResult result) {
+    public @ResponseBody PostagemAjaxValidator saveAjax(@Validated Postagem postagem,
+                                                        BindingResult result,
+                                                        @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
         PostagemAjaxValidator validator = new PostagemAjaxValidator();
         if(result.hasErrors()) {
             validator.setStatus("FAIL");
@@ -73,6 +86,7 @@ public class PostagemController implements Serializable {
             return validator;
         }
         
+        postagem.setAutor(this.autorService.findByUsuario(usuarioLogado.getId()));
         this.postagemService.saveOrUpdate(postagem);
         validator.setPostagem(postagem);
         return validator;
@@ -81,6 +95,18 @@ public class PostagemController implements Serializable {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(ModelMap model) {
         model.addAttribute("page", this.postagemService.findByPagination(0, 5));
+        
+        // No necessary with ajax.
+        //model.addAttribute("urlPagination", "/postagem/page");
+        return new ModelAndView("postagem/list", model);
+    }
+    
+    @RequestMapping(value = "/list/{usuarioId}", method = RequestMethod.GET)
+    public ModelAndView listPostagensByAutor(@PathVariable("usuarioId") Long usuarioId, ModelMap model) {
+        Autor autor = this.autorService.findByUsuario(usuarioId);
+        
+        model.addAttribute("page", this.postagemService.findByPaginationByAutor(0, 5, autor.getId()));
+        model.addAttribute("autorId", autor.getId());
         
         // No necessary with ajax.
         //model.addAttribute("urlPagination", "/postagem/page");
@@ -97,10 +123,29 @@ public class PostagemController implements Serializable {
         return view;
     }
     
+    @RequestMapping(value = "/ajax/autor/{autorId}/page/{page}", method = RequestMethod.GET)
+    public ModelAndView pagePostagensByAutor(@PathVariable("autorId") Long autorId, @PathVariable("page") Integer pagina) {
+        ModelAndView view = new ModelAndView("postagem/table-rows");
+        view.addObject("page", this.postagemService.findByPaginationByAutor(pagina - 1, 5, autorId));
+        
+        // No necessary with ajax.
+        //view.addObject("urlPagination", "/postagem/page");
+        return view;
+    }
+    
     @RequestMapping(value = "/ajax/titulo/{titulo}/page/{page}", method = RequestMethod.GET)
     public ModelAndView searchByAjax(@PathVariable("titulo") String titulo, @PathVariable("page") Integer pagina) {
         ModelAndView view = new ModelAndView("postagem/table-rows");
         view.addObject("page", this.postagemService.findByTitulo(pagina - 1, 5, titulo));
+        return view;
+    }
+    
+    @RequestMapping(value = "/ajax/autor/{autorId}/titulo/{titulo}/page/{page}", method = RequestMethod.GET)
+    public ModelAndView searchByAjaxByAutor(@PathVariable("autorId") Long autorId,
+                                            @PathVariable("titulo") String titulo,
+                                            @PathVariable("page") Integer pagina) {
+        ModelAndView view = new ModelAndView("postagem/table-rows");
+        view.addObject("page", this.postagemService.findByTituloAndAutor(pagina - 1, 5, titulo, autorId));
         return view;
     }
     

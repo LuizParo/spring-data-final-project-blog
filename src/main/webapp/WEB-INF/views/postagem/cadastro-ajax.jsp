@@ -13,6 +13,7 @@
 		<c:import url="../menu.jsp" />
 		<br/>
 		<form id="save-ajax">
+			<security:csrfInput/>
 			<fieldset>
 				<legend>Cadastro de Postagem</legend>
 				<div class="campo">
