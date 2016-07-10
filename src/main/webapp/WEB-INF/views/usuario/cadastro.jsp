@@ -10,7 +10,7 @@
 	<body>
 		<c:import url="../menu.jsp" />
 		<br/>
-		<c:url var="save" value="/usuario" />
+		<c:url var="save" value="/usuario?${_csrf.parameterName}=${_csrf.token}" />
 		<form:form modelAttribute="usuario" action="${save}" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<legend>Cadastro de Usuários</legend>
@@ -34,14 +34,6 @@
 					<form:label path="file">Avatar</form:label><br/>
 					<form:input type="file" path="file" />
 					<form:errors path="file" cssClass="error" />
-				</div>
-				<div class="campo">
-					<form:label path="perfil">Perfil</form:label><br/>
-					<form:select path="perfil" required="true">
-						<form:option value="ADMIN" label="ADMIN" />
-						<form:option value="AUTOR" label="AUTOR" />
-						<form:option value="LEITOR" label="LEITOR" />
-					</form:select>
 				</div>
 				<div>
 					<input type="submit" value="Salvar" />

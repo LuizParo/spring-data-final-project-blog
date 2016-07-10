@@ -41,6 +41,9 @@
 					<p>${postagem.autor.biografia}</p>
 				</div>
 			</div>
+			<c:if test="${logado == null}">
+				<p>Apenas usuários logados podem comentar neste post!</p>
+			</c:if>
 			<c:import url="comments.jsp" />
 		</fieldset>
 	</body>

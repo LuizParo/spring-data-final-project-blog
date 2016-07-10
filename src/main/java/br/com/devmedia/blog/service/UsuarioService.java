@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.devmedia.blog.entity.Avatar;
+import br.com.devmedia.blog.entity.Perfil;
 import br.com.devmedia.blog.entity.Usuario;
 import br.com.devmedia.blog.repository.UsuarioRepository;
 
@@ -64,7 +65,7 @@ public class UsuarioService implements Serializable {
         if(usuario.getDataCadastro() == null) {
             usuario.setDataCadastro(LocalDate.now());
         }
-        
+        usuario.setPerfil(Perfil.LEITOR);
         usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
         repository.save(usuario);
     }
@@ -78,5 +79,12 @@ public class UsuarioService implements Serializable {
     public void updateSenha(Usuario usuario) {
         usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
         this.repository.updateSenha(usuario.getSenha(), usuario.getId());
+    }
+
+    @Transactional(readOnly = false)
+    public void updatePerfil(Usuario usuario) {
+        Usuario usuarioRecovered = this.repository.findOne(usuario.getId());
+        usuarioRecovered.setPerfil(usuario.getPerfil());
+        this.repository.save(usuarioRecovered);
     }
 }

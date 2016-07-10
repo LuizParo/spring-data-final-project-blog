@@ -63,7 +63,7 @@ public class AvatarController implements Serializable {
         return view;
     }
     
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(@ModelAttribute("avatar") @Validated Avatar avatar, BindingResult result) {
         AvatarValidator validator = new AvatarValidator();
         validator.validate(avatar, result);

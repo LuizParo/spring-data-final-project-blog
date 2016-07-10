@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="comentarios">
-	<c:url value="/comentario" var="save" />
-	<form:form action="${save}" modelAttribute="comentario" method="post">
-		<input type="hidden" value="${postagem.permalink}" name="permalink" />
-		<div>
-			<form:label path="texto">Digite seu comentário</form:label>
-			<form:textarea path="texto" rows="5" cols="80" />
-			<form:errors path="texto" cssClass="error" />
-		</div>
-		<br/>
-		
-		<div>
-			<input type="submit" value="Salvar" />
-			<input type="reset" value="Limpar" />
-		</div>
-	</form:form>
+	<security:authorize access="hasAnyAuthority('ADMIN', 'AUTOR', 'LEITOR')">
+		<c:url value="/comentario" var="save" />
+		<form:form action="${save}" modelAttribute="comentario" method="post">
+			<input type="hidden" value="${postagem.permalink}" name="permalink" />
+			<div>
+				<form:label path="texto">Digite seu comentário</form:label>
+				<form:textarea path="texto" rows="5" cols="80" />
+				<form:errors path="texto" cssClass="error" />
+			</div>
+			<br/>
+			
+			<div>
+				<input type="submit" value="Salvar" />
+				<input type="reset" value="Limpar" />
+			</div>
+		</form:form>
+	</security:authorize>
 	<hr/>
 	<c:forEach items="${postagem.comentarios}" var="comentario" >
 		<div class="comentarios">

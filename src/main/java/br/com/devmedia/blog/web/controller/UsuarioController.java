@@ -41,6 +41,11 @@ public class UsuarioController implements Serializable {
         binder.setValidator(new UsuarioValidator());
     }
     
+    @RequestMapping(value = "/form", method = RequestMethod.GET)
+    public ModelAndView showForm(@ModelAttribute("usuario") Usuario usuario) {
+        return new ModelAndView("usuario/cadastro");
+    }
+    
     @RequestMapping(value = {"/update/{id}", "/update"}, method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView update(@PathVariable("id") Optional<Long> id, @ModelAttribute("usuario") @Validated Usuario usuario, BindingResult result) {
         ModelAndView view = new ModelAndView();
@@ -59,6 +64,12 @@ public class UsuarioController implements Serializable {
         this.usuarioService.updateNomeAndEmail(usuario);
         view.setViewName("redirect:/usuario/perfil/" + usuario.getId());
         return view;
+    }
+    
+    @RequestMapping(value = "/update/perfil", method = RequestMethod.POST)
+    public String updatePerfil(@ModelAttribute("usuario") @Validated Usuario usuario, BindingResult result) {
+        this.usuarioService.updatePerfil(usuario);
+        return "redirect:/usuario/list";
     }
     
     @RequestMapping(value = {"/update/senha/{id}", "/update/senha"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -85,11 +96,6 @@ public class UsuarioController implements Serializable {
         return view;
     }
     
-    @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public ModelAndView showForm(@ModelAttribute("usuario") Usuario usuario) {
-        return new ModelAndView("usuario/cadastro");
-    }
-    
     @RequestMapping(method = RequestMethod.POST)
     public String save(@ModelAttribute("usuario") @Validated Usuario usuario, BindingResult result) {
         if(result.hasErrors()) {
@@ -100,15 +106,12 @@ public class UsuarioController implements Serializable {
         usuario.setAvatar(avatar);
         
         this.usuarioService.save(usuario);
-        return "redirect:/usuario/perfil/" + usuario.getId();
+        return "redirect:/auth/form";
     }
     
     @RequestMapping(value = "/perfil/{id}", method = RequestMethod.GET)
     public ModelAndView perfil(@PathVariable("id") Long id) {
-        Usuario usuario = this.usuarioService.findById(id);
-        
-        ModelAndView view = new ModelAndView("usuario/perfil");
-        return view.addObject("usuario", usuario);
+        return new ModelAndView("usuario/perfil", "usuario", this.usuarioService.findById(id));
     }
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)

@@ -14,9 +14,8 @@
 		</security:authorize>
 	</nav>
 	<nav>
-		<security:authorize access="hasAuthority('AUTOR')">
-			|	<a href="<c:url value="/autor/form" />">Dados do Autor</a>
-		</security:authorize>
+		<%-- The security configuration concerning this menu item is located in br.com.devmedia.blog.config.SpringSecurityConfig --%>
+		|	<a href="<c:url value="/autor/form" />">Dados do Autor</a>
 		<security:authorize access="hasAuthority('ADMIN')">
 			|	<a href="<c:url value="/autor/list" />">Lista de Autores</a>
 		</security:authorize>

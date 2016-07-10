@@ -23,13 +23,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/",
-                         "/{permalink}",
-                         "/search/**",
-                         "/autor/{id}/page/{page}",
-                         "/categoria/{link}/page/{page}",
-                         "/page/{page}").permitAll()
+                             "/{permalink}",
+                             "/search/**",
+                             "/autor/{id}/page/{page}",
+                             "/categoria/{link}/page/{page}",
+                             "/page/{page}").permitAll()
                 .antMatchers("/avatar/load/{id}").permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/usuario/form",
+                             "/usuario").permitAll()
+                .antMatchers("/autor/form").hasAuthority("AUTOR") // Menu item "Dados do Autor"
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
