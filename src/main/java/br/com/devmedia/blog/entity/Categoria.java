@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "categoria")
-public class Categoria implements Serializable {
+public class Categoria extends AbstractAuditoria<Long> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

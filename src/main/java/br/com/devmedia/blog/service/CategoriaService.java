@@ -29,8 +29,16 @@ public class CategoriaService {
     
     @Transactional(readOnly = false)
     public void saveOrUpdate(Categoria categoria) {
-        categoria.setPermalink(this.linkFormatter.formatPermalink(categoria.getDescricao()));
-        this.repository.save(categoria);
+        String permalink = this.linkFormatter.formatPermalink(categoria.getDescricao());
+        if(categoria.getId() != null) {
+            Categoria categoriaRecovered = this.repository.findOne(categoria.getId());
+            categoriaRecovered.setPermalink(permalink);
+            categoriaRecovered.setDescricao(categoria.getDescricao());
+            this.repository.save(categoriaRecovered); 
+        } else {
+            categoria.setPermalink(permalink);
+            this.repository.save(categoria); 
+        }
     }
     
     @Transactional(readOnly = false)

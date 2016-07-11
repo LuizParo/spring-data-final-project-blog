@@ -72,13 +72,19 @@ public class UsuarioService implements Serializable {
 
     @Transactional(readOnly = false)
     public void updateNomeAndEmail(Usuario usuario) {
-        this.repository.updateNomeAndEmail(usuario.getNome(), usuario.getEmail(), usuario.getId());
+        Usuario usuarioRecovered = this.repository.findOne(usuario.getId());
+        usuarioRecovered.setNome(usuario.getNome());
+        usuarioRecovered.setEmail(usuario.getEmail());
+        //this.repository.updateNomeAndEmail(usuario.getNome(), usuario.getEmail(), usuario.getId());
+        this.repository.save(usuarioRecovered);
     }
 
     @Transactional(readOnly = false)
     public void updateSenha(Usuario usuario) {
-        usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
-        this.repository.updateSenha(usuario.getSenha(), usuario.getId());
+        Usuario usuarioRecovered = this.repository.findOne(usuario.getId());
+        usuarioRecovered.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+        //this.repository.updateSenha(usuarioRecovered.getSenha(), usuarioRecovered.getId());
+        this.repository.save(usuarioRecovered);
     }
 
     @Transactional(readOnly = false)
