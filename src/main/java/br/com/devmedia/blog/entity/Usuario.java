@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario implements Serializable {
+public class Usuario extends AbstractAuditoria<Long> implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
