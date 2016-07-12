@@ -61,7 +61,7 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(builder.build());
         converter.setObjectMapper(objectMapper);
         
-        converters.add(converter);
         converters.add(new ByteArrayHttpMessageConverter());
+        converters.add(converter);
     }
 }
